@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fechamento de Caixa Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="header">
+    <div class="date-selector">
+        <label>Selecionar Data:</label>
+        <input type="date" id="data-caixa" onchange="atualizarDataExtenso()">
+    </div>
+    <h2 id="data-display">--/--/----</h2>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h3>🛒 Vendas</h3>
+        <div class="input-group">
+            <label>Delivery</label>
+            <input type="number" id="delivery" value="0" oninput="calcularTudo()">
+        </div>
+        <div class="input-group">
+            <label>Balcão</label>
+            <input type="number" id="balcao" value="0" oninput="calcularTudo()">
+        </div>
+        <div class="input-group">
+            <label>Mesa</label>
+            <input type="number" id="mesa" value="0" oninput="calcularTudo()">
+        </div>
+        <div class="subtotal-box blue" id="subtotal-vendas">Subtotal Vendas: R$ 0,00</div>
+    </div>
+
+    <div class="card">
+        <h3>💳 Recebimentos</h3>
+        <div class="input-group">
+            <label>Dinheiro</label>
+            <input type="number" id="dinheiro" value="0" oninput="calcularTudo()">
+        </div>
+        <div class="input-group">
+            <label>Cartão</label>
+            <input type="number" id="cartao" value="0" oninput="calcularTudo()">
+        </div>
+        <div class="subtotal-box blue" id="subtotal-recebido">Subtotal Recebido: R$ 0,00</div>
+    </div>
+
+    <div class="card">
+        <h3>💸 Saídas</h3>
+        <div class="input-group">
+            <label>Descrição</label>
+            <input type="text" id="saida-desc" placeholder="Ex: Fornecedor">
+        </div>
+        <div class="input-group">
+            <label>Valor</label>
+            <input type="number" id="saida-valor" value="0">
+        </div>
+        <button class="btn-add" onclick="adicionarSaida()">+ Adicionar Saída</button>
+        
+        <div id="lista-saidas" class="lista-itens">
+            </div>
+
+        <div class="subtotal-box blue" id="subtotal-saidas">Total Saídas: R$ 0,00</div>
+    </div>
+</div>
+
+<div id="status-card" class="status-caixa ok">CAIXA OK ✅</div>
+
+<div class="footer-info">
+    Sobra/Equilíbrio: <span id="equilibrio-valor">R$ 0,00</span>
+</div>
+
+<button class="btn-print" onclick="gerarCupom()">🖨️ Gerar Cupom Elgin i9 (72mm)</button>
+
+<div id="cupom-print"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  // Estas informações tu pegas no Console do Firebase (Configurações do Projeto)
+  const firebaseConfig = {
+  apiKey: "AIzaSyCotf37R9q2b8ZHNDqhhzqZNZnWjq9Zjq4",
+  authDomain: "meu-caixa-vercel-app.firebaseapp.com",
+  projectId: "meu-caixa-vercel-app",
+  storageBucket: "meu-caixa-vercel-app.firebasestorage.app",
+  messagingSenderId: "9381164136",
+  appId: "1:9381164136:web:afb5bde46952e2548bb7dd",
+  measurementId: "G-0KQ8WRPWKE"
+};
+
+  // Inicializa o Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Torna o 'db' acessível para o seu script.js
+  window.db = db;
+</script>
+
+<script src="script.js"></script>
+</body>
+</html>
