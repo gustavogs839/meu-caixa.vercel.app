@@ -140,10 +140,42 @@ input:focus { border-color: var(--primary); outline: none; }
 
 .btn-print:active { transform: translateY(2px); box-shadow: 0 2px 0 #c0392b; }
 
-/* CSS Impressão mantém o anterior, mas otimizado */
 @media print {
-    body * { display: none !important; }
-    #cupom-print, #cupom-print * { display: block !important; visibility: visible !important; }
-    #cupom-print { position: absolute; left: 0; top: 0; width: 72mm; padding: 2mm; font-family: 'Courier New', monospace; font-size: 12px; }
+    /* Remove margens e informações do navegador */
+    @page {
+        margin: 0;
+        size: auto;
+    }
+
+    /* Esconde o site */
+    body * {
+        display: none !important;
+    }
+
+    /* Configuração do Cupom */
+    #cupom-print, #cupom-print * {
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    #cupom-print {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 72mm;
+        padding: 4mm; /* Aumentei um pouco o recuo lateral */
+        font-family: 'Courier New', Courier, monospace;
+        
+        /* AJUSTES DE LEGIBILIDADE */
+        font-size: 14px;      /* Aumentado de 12px para 14px */
+        font-weight: bold;    /* Deixa todo o texto mais "grosso" */
+        line-height: 1.4;     /* Mais espaço entre linhas para não borrar */
+        color: #000;
+    }
+
+    /* Títulos dentro do cupom ficam ainda maiores */
+    #cupom-print h2, #cupom-print b, #cupom-print strong {
+        font-size: 16px;
+        text-transform: uppercase;
+    }
 }
-#cupom-print { display: none; }
